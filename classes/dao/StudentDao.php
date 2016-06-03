@@ -3,7 +3,7 @@
   	*	@author mahder.neway <mahderalem@gmail.com>
   	*/
 
-	require_once ( __DIR__ . '/../entity/Student.php' );
+	  require_once ( __DIR__ . '/../entity/Student.php' );
   	require_once ( __DIR__ . '/../dbconnection/DBConnection.php' );
   	
   	class StudentDao {
@@ -14,47 +14,70 @@
 
   		public function save($student){
   			try{
-
+          $query = "INSERT INTO tbl_student VALUES(" . $student->getId() . ", '" . addslashes($student->getName()) . "', '" . addslashes($student->getCity()) . "')";
+          DBConnection::save($query);
   			}catch(Exception $ex){
   				$ex->getMessage();
   			}
   		}
 
   		public function update($student){
-
+        try{
+          $query = "UPDATE tbl_student SET name = '" . addcslashes($student->getName()) . "', city = '" . addslashes($student->getCity()) . "' WHERE id = " . $student->getId();
+          DBConnection::save($query);
+        }catch(Exception $ex){
+          $ex->getMessage();
+        }
   		}
 
   		public function delete($id){
-
+        try{
+          $query = "DELETE FROM tbl_student WHERE id = " . $id;
+          DBConnection::save($query);
+        }catch(Exception $ex){
+          $ex->getMessage();
+        }
   		}
 
   		public function getObject($id){
-
+        $object = null;
+        try{
+          $query = "SELECT * FROM tbl_student WHERE id = " . $id;
+          $result = DBConnection::read($query);
+          $resultRow = mysqli_fetch_object($result);
+          if($resultRow != null){
+            $object = $this->constructObject($resultRow);
+          }
+        }catch(Exception $ex){
+          $ex->getMessage();
+        }
+        return $object;
   		}
 
   		public function getAllObjects(){
-
+        $objects = array();
+        try{
+            $query = "SELECT * FROM tbl_student ORDER BY name, city ASC";
+            $result = DBConnection::read($query);
+            while($resultRow = mysqli_fetch_object($result)){
+                $object = $this->constructObject($resultRow);
+                $objects[] = $object;
+            }
+        }catch(Exception $ex){
+            $ex->getMessage();
+        }
+        return $objects;
   		}
 
   		private function constructObject( $resultRow ){
-	      $ad = null;
-	      if($resultRow != null){
-	        $ad = new Ad();
-	        $ad->setId($resultRow->id);
-	        $ad->setTitle(stripslashes($resultRow->title));
-	        $ad->setOverlayText(stripslashes($resultRow->overlay_text));
-	        $ad->setAdImage($resultRow->ad_image);
-	        $ad->setClickUrl(stripslashes($resultRow->click_url));
-	        $ad->setAdText(stripslashes($resultRow->ad_text));
-	        $ad->setContactName(stripslashes($resultRow->contact_name));
-	        $ad->setContactPhone(stripslashes($resultRow->contact_phone));
-	        $ad->setContactEmail(stripslashes($resultRow->contact_email));
-	        $ad->setAdFirstPublishedDate($resultRow->ad_first_published_date);
-	        $ad->setAdEndDate($resultRow->ad_end_date);
-	        $ad->setModifiedBy($resultRow->modified_by);
-	        $ad->setModificationDate($resultRow->modification_date);
+	      $object = null;
+	      if( $resultRow != null ){
+	        $object = new Student();
+	        $student->setId($resultRow->id);
+	        $student->setName(stripslashes($resultRow->name));
+	        $student->setCity(stripslashes($resultRow->city));	        
 	      }
-	      return $ad;
+	      return $object;
 	    }
 
   	}//end class
