@@ -8,5 +8,6 @@
         $studentArray['city'] = $student->getCity();
         $students[] = $studentArray;
     }//end foreach...loop
+    //var_dump(json_encode($students));
     echo json_encode($students);
 ?>

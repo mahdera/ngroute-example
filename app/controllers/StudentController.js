@@ -1,5 +1,7 @@
 mainApp.controller('StudentController', function($scope, $http) {
 
+    $scope.student = {};
+
     $scope.getStudents = function(){
         $http({
             url: 'ajax/get-all-students.php',
@@ -9,25 +11,18 @@ mainApp.controller('StudentController', function($scope, $http) {
         }).success(function(data){
             $scope.students = data;
         });
-    };
+    };    
 
-    $scope.message = "Click on the hyper link to view the students list.";
-
-    $scope.addStudent = function(){
-        /*$http.post("ajax/add-student.php?name=" + encodeURIComponent($scope.studentName) + "&city=" + encodeURIComponent($scope.studentCity)).success(function(data){
-            //clear the input box.
-            $scope.studentName = "";
-            $scope.studentCity = "";
-        });*/
-        var dataString = "name=" + encodeURIComponent($scope.studentName) + "&city=" + encodeURIComponent($scope.studentCity);
+    $scope.addStudent = function(){        
         $http({
             url: 'ajax/add-student.php',
             method: 'POST',
-            data: {name: $scope.studentName,city: $scope.studentCity},
-            headers: {'Content-Type': 'application/json'}
+            data: $scope.student,            
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function (data, status, headers, config) {
-            $scope.studentName = "";
-            $scope.studentCity = "";
+            $scope.student = {};
+            
+            //$scope.getStudents();
         }).error(function (data, status, headers, config) {
             console.log('Something went wrong...');
         });
