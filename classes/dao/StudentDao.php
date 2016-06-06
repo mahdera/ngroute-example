@@ -3,9 +3,9 @@
   	*	@author mahder.neway <mahderalem@gmail.com>
   	*/
 
-	  require_once ( __DIR__ . '/../entity/Student.php' );
+	require_once ( __DIR__ . '/../entity/Student.php' );
   	require_once ( __DIR__ . '/../dbconnection/DBConnection.php' );
-  	
+
   	class StudentDao {
 
   		public function __construct(){
@@ -73,9 +73,9 @@
 	      $object = null;
 	      if( $resultRow != null ){
 	        $object = new Student();
-	        $student->setId($resultRow->id);
-	        $student->setName(stripslashes($resultRow->name));
-	        $student->setCity(stripslashes($resultRow->city));	        
+	        $object->setId($resultRow->id);
+	        $object->setName(stripslashes($resultRow->name));
+	        $object->setCity(stripslashes($resultRow->city));
 	      }
 	      return $object;
 	    }

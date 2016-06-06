@@ -13,23 +13,23 @@
 		}
 
 		public function saveStudent($student){
-			$studentDao->save($student);
+			$this->studentDao->save($student);
 		}
 
 		public function updateStudent($student){
-			$studentDao->update($student);
+			$this->studentDao->update($student);
 		}
 
 		public function deleteStudent($id){
-			$studentDao->delete($id);
+			$this->studentDao->delete($id);
 		}
 
 		public function getStudent($id){
-			return $studentDao->getObject($id);
+			return $this->studentDao->getObject($id);
 		}
 
 		public function getAllStudents(){
-			return $studentDao->getAllObjects();
+			return $this->studentDao->getAllObjects();
 		}
 
 	}//end class

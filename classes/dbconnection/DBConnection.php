@@ -8,7 +8,7 @@
     public static function getDbInstance(){
       $server = "localhost";
       $username = "root";
-      $password = "Iloveleki7";
+      $password = "root";
       $database = "db_school";
       return new mysqli($server, $username, $password, $database);
     }
